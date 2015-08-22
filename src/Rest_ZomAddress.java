@@ -30,7 +30,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-public class RestaurantsURL {
+public class Rest_ZomAddress {
 	
 	
     static WebDriver driver;

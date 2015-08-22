@@ -34,7 +34,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-public class SeleniumParse {
+public class SeleniumParse3 {
 	
 	
     static WebDriver driver;
@@ -55,7 +55,7 @@ public class SeleniumParse {
         driver = new FirefoxDriver();
         WebDriverWait wait = new WebDriverWait(driver, 5);
         
-		for (int i = (hotel_list.size()) - 2; i < hotel_list.size() ; i++) {
+		for (int i = 21; i < 25; i++) {
         //for (int i = 1; i < 2; i++) {
 			System.out.println(moversParsed.get(i));
 			driver.get(moversParsed.get(i));	
@@ -88,21 +88,19 @@ public class SeleniumParse {
         WebElement alleles = driver.findElement(By.xpath("//div[contains(@class,'zs-following-list pbot')]"));
         List<WebElement> elements = alleles.findElements(By.xpath("//div[@itemprop='review']"));
     
-        ParseObject RestaurantReviews = new ParseObject("BlrHotelsReviews");
         System.out.println("elements size:" + elements.size());
         for(WebElement element:elements) {
-        	
+        	ParseObject RestaurantReviews = new ParseObject("BlrHotelsReview");
             RestaurantReviews.put("hotelUrl", hotel_list.get(i));
             String title = StringUtils.substringBetween(element.getText(), "RATED", "Like");
             //RestaurantReviews.put("hotelReview", element.getText());
             RestaurantReviews.put("hotelReview",title);
             RestaurantReviews.save();
-            
         }
         
         
     } 
-		driver.quit();
+		driver.close();
     }
     
     public static void saveParsedMoverData(List<String> hotel_list){

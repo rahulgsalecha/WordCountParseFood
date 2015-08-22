@@ -30,7 +30,7 @@ import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlDivision;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
-public class RestaurantsURL {
+public class RestaurantsURLTownTrendz {
 	
 	
     static WebDriver driver;
@@ -38,58 +38,38 @@ public class RestaurantsURL {
 
     public static void main(String[] args) throws IOException, InterruptedException {
     	
-    	PrintStream ps = new PrintStream("//Users//rsalecha//Downloads//jate_test//All_Blr_restarant_URLs.txt");
+    	PrintStream ps = new PrintStream("//Users//rsalecha//Downloads//jate_test//Blr_restarant_URLs_TownTrendz.txt");
         PrintStream orig = System.out;
         System.setOut(ps);
 
-    	
         driver = new FirefoxDriver();
         WebDriverWait wait = new WebDriverWait(driver, 5);
-        int i = 1;
         String page;
         Integer PageCount; 
+        
+        for (int i = 1; i <= 219; i++){
       		        								
-        driver.get("https://www.zomato.com/bangalore/restaurants");	  
-        //https://www.zomato.com/mumbai/restaurants
-        
-        
-        WebElement alleles = driver.findElement(By.xpath("//div[contains(@class,'search-result-all')]"));
-        List<WebElement> elements = alleles.findElements(By.xpath("//a[@class='result-title']"));
-            for(WebElement element:elements) {
-        	System.out.println(i + "," + element.getText() + "," + element.getAttribute("href"));
-            i++; 
-        }
-   	
-        try{
-        while(driver.findElement(By.xpath("//li[contains(@class, 'active next')]")).isEnabled()) {
-        
-        WebElement Page = driver.findElement(By.xpath("//li[contains(@class, 'current')]"));
-        page = Page.getText();
-        PageCount = Integer.valueOf(page);
-        
-        /*
-        System.out.println("=============");
-        System.out.println("Page :" + PageCount);
-        System.out.println("=============");
-        */
-        if(PageCount % 5 == 0) {
-        	driver.findElement(By.xpath("//a[contains(@title,'Next 5 Pages')]")).click();
-        } else {
-        
-        driver.findElement(By.xpath("//a[contains(@title,'Go to Page " + (PageCount+1) + "')]")).click();
-        }
-        driver.getCurrentUrl();
-        
-        driver.get(driver.getCurrentUrl());
-        WebElement alleles1 = driver.findElement(By.xpath("//div[contains(@class,'search-result-all')]"));
-        wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//a[@class='result-title']")));
-        List<WebElement> elements1 = alleles1.findElements(By.xpath("//a[@class='result-title']"));
-    
-        for(WebElement element:elements1) {
-            System.out.println(i + "," + element.getText() + "," + element.getAttribute("href"));
-            i++; 
-        }
+        driver.get("http://www.towntrendz.com/bangalore/restaurants/page/"+ i);	  
 
+        WebElement alleles = driver.findElement(By.xpath("//*[@id='restaurants_ul_list']"));
+        List<WebElement> elements = alleles.findElements(By.xpath("//li/div[1]/div[1]/p[1]/a"));
+            for(WebElement element:elements) {
+        	System.out.println(element.getText() + "," + element.getAttribute("href"));
+        }
+        
+        }
+   	/*
+        try{
+        
+        while(driver.findElement(By.xpath("//*[@id='restaurants_loading_container']/div[4]/ul/li/a/i")).isEnabled()) {
+        	wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//*[@id='restaurants_loading_container']/div[4]/ul/li/a/i")));
+        	driver.findElement(By.xpath("//*[@id='restaurants_loading_container']/div[4]/ul/li/a/i")).click();
+        
+        WebElement alleles1 = driver.findElement(By.xpath("//*[@id='restaurants_ul_list']"));
+        List<WebElement> elements1 = alleles1.findElements(By.xpath("//li/div[1]/div[1]/p[1]/a"));
+            for(WebElement element:elements1) {
+        	System.out.println(element.getText() + "," + element.getAttribute("href"));
+        }
         }
         } catch (NoSuchElementException e) {
         	System.out.println("NoSuchElementException ");
@@ -98,7 +78,7 @@ public class RestaurantsURL {
         } catch (StaleElementReferenceException e) {
         	System.out.println("StaleElementReferenceException");
         }
-        
+     */   
         System.setOut(orig);
         ps.close();
     }
